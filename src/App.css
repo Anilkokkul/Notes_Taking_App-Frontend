@@ -1,0 +1,20 @@
+* {
+  font-family: "gilroy";
+  font-weight: 900;
+}
+.noteForm {
+  padding: 5vh 0;
+  width: 50%;
+  margin: auto;
+}
+.signUp {
+  width: 500px;
+  margin: auto;
+  padding: 10vh 0;
+}
+.signUp h1 {
+  text-align: center;
+}
+.noteForm h1 {
+  text-align: center;
+}
