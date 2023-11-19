@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function NoteForm() {
-  const data = { title: "", content: "", type: "" };
+  const data = { title: "", content: "", type: "task" };
   const [note, setNote] = useState(data);
 
   const handleUser = (e) => {
@@ -70,7 +70,8 @@ function NoteForm() {
           name="type"
           required
         >
-          <option value="idea">idea</option>
+          <option>select</option>
+          <option defaultValue="idea">idea</option>
           <option value="reminder">reminder</option>
           <option value="task">task</option>
           <option value="important">important</option>

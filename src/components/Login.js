@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import { instance } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function SignUp() {
   const data = { email: "", password: "" };
@@ -68,6 +68,7 @@ function SignUp() {
         <Button variant="primary" type="submit">
           Submit
         </Button>
+        <Link to={"/signup"}>Create Account</Link>
       </Form>
       <ToastContainer />
     </div>

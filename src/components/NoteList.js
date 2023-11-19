@@ -14,17 +14,19 @@ const NoteList = () => {
   return (
     <div>
       <h1>Notes</h1>
-      {notes &&
-        notes.map((note) => (
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>{note.title}</Card.Title>
-              <Card.Text>{note.content}</Card.Text>
-              <Button variant="success">Edit</Button>{" "}
-              <Button variant="danger">Delete</Button>{" "}
-            </Card.Body>
-          </Card>
-        ))}
+      <div className="d-flex justify-content-center align-content-center gap-3 flex-wrap ">
+        {notes &&
+          notes.map((note, index) => (
+            <Card style={{ width: "18rem" }} key={index}>
+              <Card.Body>
+                <Card.Title>{note.title}</Card.Title>
+                <Card.Text>{note.content}</Card.Text>
+                <Button variant="success">Edit</Button>{" "}
+                <Button variant="danger">Delete</Button>{" "}
+              </Card.Body>
+            </Card>
+          ))}
+      </div>
     </div>
   );
 };

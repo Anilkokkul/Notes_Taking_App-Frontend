@@ -5,8 +5,31 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NoteForm from "./NoteForm";
 import NoteList from "./NoteList";
+import { instance } from "../App";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    instance
+      .get("/logout")
+      .then((data) => {
+        toast.success(data.data.message, {
+          position: "top-center",
+        });
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      })
+      .catch((error) => {
+        const errorMessage = error.response.data.message;
+        toast.warn(errorMessage, {
+          position: "top-center",
+        });
+      });
+  };
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -21,7 +44,7 @@ function Home() {
             >
               <Nav.Link href="#action1">Home</Nav.Link>
             </Nav>
-            <Button variant="danger" className="mx-2">
+            <Button variant="danger" className="mx-2" onClick={handleLogout}>
               LogOut
             </Button>{" "}
           </Navbar.Collapse>
@@ -29,6 +52,7 @@ function Home() {
       </Navbar>
       <NoteForm />
       <NoteList />
+      <ToastContainer />
     </>
   );
 }
