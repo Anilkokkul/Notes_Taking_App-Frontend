@@ -68,7 +68,9 @@ function SignUp() {
         <Button variant="primary" type="submit">
           Submit
         </Button>
-        <Link to={"/signup"}>Create Account</Link>
+        <Link to={"/signup"} className="m-1">
+          Create Account
+        </Link>
       </Form>
       <ToastContainer />
     </div>

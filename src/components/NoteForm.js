@@ -5,7 +5,7 @@ import { instance } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function NoteForm() {
+function NoteForm({ getNotes }) {
   const data = { title: "", content: "", type: "task" };
   const [note, setNote] = useState(data);
 
@@ -25,6 +25,7 @@ function NoteForm() {
         toast.success(data.data.message, {
           position: "top-center",
         });
+        getNotes();
       })
       .catch((error) => {
         const errorMessage = error.response.data.message;
@@ -32,6 +33,8 @@ function NoteForm() {
           position: "top-center",
         });
       });
+
+    setNote({ ...note, title: "", content: "", type: "" });
   };
   return (
     <div>

@@ -1,17 +1,50 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NoteForm from "./NoteForm";
-import NoteList from "./NoteList";
+// import NoteList from "./NoteList";
+import { useEffect, useState } from "react";
+
 import { instance } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getNotes();
+  }, []);
+
+  const getNotes = () => {
+    instance
+      .get("/notes")
+      .then((response) => setNotes(response.data.Notes))
+      .catch((error) => console.error("Error fetching notes: ", error));
+  };
+  const handleDelete = (id) => {
+    try {
+      instance
+        .delete(`/notes/${id}`)
+        .then((data) => {
+          toast(data.data.message, {
+            position: "top-center",
+            theme: "dark",
+          });
+          getNotes();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleLogout = () => {
     instance
       .get("/logout")
@@ -50,8 +83,30 @@ function Home() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <NoteForm />
-      <NoteList />
+      <NoteForm getNotes={getNotes} />
+      {/* <NoteList /> */}
+      <div>
+        <h1>Notes</h1>
+        <div className="d-flex justify-content-center align-content-center gap-3 flex-wrap ">
+          {notes &&
+            notes.map((note, index) => (
+              <Card style={{ width: "18rem" }} key={index}>
+                <Card.Body>
+                  <Card.Title>{note.title}</Card.Title>
+                  <Card.Text>{note.content}</Card.Text>
+                  <Button variant="success">Edit</Button>{" "}
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(note._id)}
+                  >
+                    Delete
+                  </Button>
+                </Card.Body>
+              </Card>
+            ))}
+        </div>
+        <ToastContainer />
+      </div>
       <ToastContainer />
     </>
   );
