@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { instance } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function NoteForm({ getNotes }) {
-  const data = { title: "", content: "", type: "task" };
+function NoteForm({ getNotes, editNote, setSelectedNote }) {
+  const data = useMemo(() => ({ title: "", content: "", type: "task" }), []);
+  const selectedNote = useMemo(() => editNote, [editNote]);
   const [note, setNote] = useState(data);
+  useEffect(() => {
+    if (selectedNote) {
+      setNote(selectedNote);
+    } else {
+      setNote(data);
+    }
+  }, [selectedNote, data]);
 
   const handleUser = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -15,31 +23,39 @@ function NoteForm({ getNotes }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(note);
     if (note.type === "") {
       return alert("Please select type");
     }
+    const apiEndpoint = selectedNote
+      ? `/notes/${selectedNote._id}`
+      : "/notes   ";
     instance
-      .post("/notes", note)
+      .request({
+        method: selectedNote ? "put" : "post",
+        url: apiEndpoint,
+        data: note,
+      })
       .then((data) => {
-        toast.success(data.data.message, {
+        toast(data.data.message, {
           position: "top-center",
+          autoClose: 2000,
         });
         getNotes();
+        setSelectedNote(null);
       })
       .catch((error) => {
         const errorMessage = error.response.data.message;
         toast.warn(errorMessage, {
           position: "top-center",
+          autoClose: 2000,
         });
       });
-
-    setNote({ ...note, title: "", content: "", type: "" });
+    setNote(data);
   };
   return (
     <div>
       <Form className="noteForm" onSubmit={handleSubmit}>
-        <h1>Create Note</h1>
+        <h1>{selectedNote ? "Edit Note" : "Create Note"}</h1>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Title:</Form.Label>
           <Form.Control

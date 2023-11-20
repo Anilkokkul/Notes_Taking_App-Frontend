@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [notes, setNotes] = useState([]);
+  const [selectedNote, setSelectedNote] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +28,10 @@ function Home() {
       .then((response) => setNotes(response.data.Notes))
       .catch((error) => console.error("Error fetching notes: ", error));
   };
+  const handleEdit = (note) => {
+    setSelectedNote(note);
+  };
+
   const handleDelete = (id) => {
     try {
       instance
@@ -35,6 +40,7 @@ function Home() {
           toast(data.data.message, {
             position: "top-center",
             theme: "dark",
+            autoClose: 2000,
           });
           getNotes();
         })
@@ -51,6 +57,7 @@ function Home() {
       .then((data) => {
         toast.success(data.data.message, {
           position: "top-center",
+          autoClose: 2000,
         });
         setTimeout(() => {
           navigate("/login");
@@ -83,7 +90,11 @@ function Home() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <NoteForm getNotes={getNotes} />
+      <NoteForm
+        getNotes={getNotes}
+        editNote={selectedNote}
+        setSelectedNote={setSelectedNote}
+      />
       {/* <NoteList /> */}
       <div>
         <h1>Notes</h1>
@@ -93,8 +104,13 @@ function Home() {
               <Card style={{ width: "18rem" }} key={index}>
                 <Card.Body>
                   <Card.Title>{note.title}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    {note.type}
+                  </Card.Subtitle>
                   <Card.Text>{note.content}</Card.Text>
-                  <Button variant="success">Edit</Button>{" "}
+                  <Button variant="success" onClick={() => handleEdit(note)}>
+                    Edit
+                  </Button>{" "}
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(note._id)}

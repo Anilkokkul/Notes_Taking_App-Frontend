@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 const NoteList = () => {
   const [notes, setNotes] = useState([]);
   useEffect(() => {
-    console.log("hiii");
     getNotes();
   }, []);
 
