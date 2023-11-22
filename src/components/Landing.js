@@ -33,6 +33,15 @@ function Landing() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <br></br>
+      <div className="Intro">
+        <h3>Welcome to MyNotesApp!</h3>
+        <p>
+          This is a simple web application where you can create, edit and delete
+          your notes.
+        </p>
+        <img src="/notes.png" alt="notes"></img>
+      </div>
     </div>
   );
 }

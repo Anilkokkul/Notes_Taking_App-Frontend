@@ -19,3 +19,16 @@
 .noteForm h1 {
   text-align: center;
 }
+
+.Intro {
+  margin: auto;
+  text-align: center;
+  width: 80vw;
+}
+.Intro img {
+  width: 20vw;
+}
+
+.Intro h3 {
+  font-size: 5vw;
+}

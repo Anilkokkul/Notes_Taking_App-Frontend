@@ -14,7 +14,6 @@ export const instance = axios.create({
 function App() {
   return (
     <BrowserRouter>
-      <div className="App"></div>
       <Routes>
         <Route path="/" element={<Landing />}></Route>
         <Route path="/Home" element={<Home />}></Route>
