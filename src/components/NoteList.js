@@ -5,7 +5,10 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const NoteList = () => {
-  const [notes, setNotes] = useState([]);
+  // const [notes, setNotes] = useState([]);
+  const [filterOption, setFilterOption] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  // console.log("Notes::::", notes);
   useEffect(() => {
     getNotes();
   }, []);
@@ -35,6 +38,18 @@ const NoteList = () => {
     }
     getNotes();
   };
+
+  const filteredNotes = notes.filter((note) => {
+    if (filterOption === "all") {
+      return note.title.toLowerCase().includes(searchTerm.toLowerCase());
+    } else {
+      return (
+        note.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        note.category === filterOption
+      );
+    }
+  });
+
   return (
     <div>
       <h1>Notes</h1>
