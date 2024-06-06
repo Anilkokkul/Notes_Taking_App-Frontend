@@ -91,6 +91,9 @@ const NoteList = ({ handleEdit }) => {
           <Card style={{ width: "18rem" }} key={index}>
             <Card.Body>
               <Card.Title>{note.title}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {note.type}
+              </Card.Subtitle>
               <Card.Text>{note.content}</Card.Text>
               <Button variant="success" onClick={() => handleEdit(note)}>
                 Edit
