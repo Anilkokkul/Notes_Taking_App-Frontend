@@ -12,6 +12,7 @@ import { instance } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import NoteList from "./NoteList";
 
 function Home() {
   const [notes, setNotes] = useState([]);
@@ -95,34 +96,7 @@ function Home() {
         editNote={selectedNote}
         setSelectedNote={setSelectedNote}
       />
-      {/* <NoteList /> */}
-      <div>
-        <h1>Notes</h1>
-        <div className="d-flex justify-content-center align-content-center gap-3 flex-wrap ">
-          {notes &&
-            notes.map((note, index) => (
-              <Card style={{ width: "18rem" }} key={index}>
-                <Card.Body>
-                  <Card.Title>{note.title}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {note.type}
-                  </Card.Subtitle>
-                  <Card.Text>{note.content}</Card.Text>
-                  <Button variant="success" onClick={() => handleEdit(note)}>
-                    Edit
-                  </Button>{" "}
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDelete(note._id)}
-                  >
-                    Delete
-                  </Button>
-                </Card.Body>
-              </Card>
-            ))}
-        </div>
-        <ToastContainer />
-      </div>
+      <NoteList />
       <ToastContainer />
     </>
   );

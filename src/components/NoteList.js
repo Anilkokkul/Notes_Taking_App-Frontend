@@ -4,11 +4,11 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const NoteList = () => {
   const [notes, setNotes] = useState([]);
   const [filterOption, setFilterOption] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-  // console.log("Notes::::", notes);
   useEffect(() => {
     getNotes();
   }, []);
@@ -29,6 +29,7 @@ const NoteList = () => {
             position: "top-center",
             theme: "dark",
           });
+          getNotes(); // Refresh notes after deletion
         })
         .catch((error) => {
           console.log(error);
@@ -36,7 +37,14 @@ const NoteList = () => {
     } catch (error) {
       console.log(error);
     }
-    getNotes();
+  };
+
+  const handleFilterChange = (event) => {
+    setFilterOption(event.target.value);
+  };
+
+  const handleSearchTermChange = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const filteredNotes = notes.filter((note) => {
@@ -45,21 +53,23 @@ const NoteList = () => {
     } else {
       return (
         note.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        note.category === filterOption
+        note.type === filterOption
       );
     }
   });
 
   return (
     <div>
-      <h1>Notes11</h1>
-      <div>
+      <h1>Notes</h1>
+      <div className=" d-flex justify-content-center align-items-center gap-2 p-2">
         <label>
           Filter by Category:
-          <select value={filterOption} onChange={handleFilterChange}>
+          <select value={filterOption} onChange={handleFilterChange} className="form-select p-2" >
             <option value="all">All</option>
-            <option value="Task">Task</option>
-            <option value="category2">Category 2</option>
+            <option value="task">Task</option>
+            <option value="idea">Idea</option>
+            <option value="reminder">Reminder</option>
+            <option value="important">Important</option>
           </select>
         </label>
         <br />
@@ -72,20 +82,19 @@ const NoteList = () => {
           />
         </label>
       </div>
-      <div className="d-flex justify-content-center align-content-center gap-3 flex-wrap ">
-        {notes &&
-          notes.map((note, index) => (
-            <Card style={{ width: "18rem" }} key={index}>
-              <Card.Body>
-                <Card.Title>{note.title}</Card.Title>
-                <Card.Text>{note.content}</Card.Text>
-                <Button variant="success">Edit</Button>{" "}
-                <Button variant="danger" onClick={() => handleDelete(note._id)}>
-                  Delete
-                </Button>
-              </Card.Body>
-            </Card>
-          ))}
+      <div className="d-flex justify-content-center align-content-center gap-3 flex-wrap">
+        {filteredNotes.map((note, index) => (
+          <Card style={{ width: "18rem" }} key={index}>
+            <Card.Body>
+              <Card.Title>{note.title}</Card.Title>
+              <Card.Text>{note.content}</Card.Text>
+              <Button variant="success">Edit</Button>{" "}
+              <Button variant="danger" onClick={() => handleDelete(note._id)}>
+                Delete
+              </Button>
+            </Card.Body>
+          </Card>
+        ))}
       </div>
       <ToastContainer />
     </div>
