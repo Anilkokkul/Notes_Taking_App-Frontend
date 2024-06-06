@@ -4,11 +4,13 @@ import Form from "react-bootstrap/Form";
 import { instance } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function NoteForm({ getNotes, editNote, setSelectedNote }) {
   const data = useMemo(() => ({ title: "", content: "", type: "task" }), []);
   const selectedNote = useMemo(() => editNote, [editNote]);
   const [note, setNote] = useState(data);
+  const navigate = useNavigate();
   useEffect(() => {
     if (selectedNote) {
       setNote(selectedNote);
@@ -49,6 +51,9 @@ function NoteForm({ getNotes, editNote, setSelectedNote }) {
           position: "top-center",
           autoClose: 2000,
         });
+        if (errorMessage === "Not Authenticated need to login") {
+          navigate("/login");
+        }
       });
     setNote(data);
   };

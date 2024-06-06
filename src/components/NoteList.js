@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const NoteList = () => {
-  // const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState([]);
   const [filterOption, setFilterOption] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   // console.log("Notes::::", notes);
@@ -52,7 +52,26 @@ const NoteList = () => {
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Notes11</h1>
+      <div>
+        <label>
+          Filter by Category:
+          <select value={filterOption} onChange={handleFilterChange}>
+            <option value="all">All</option>
+            <option value="Task">Task</option>
+            <option value="category2">Category 2</option>
+          </select>
+        </label>
+        <br />
+        <label>
+          Search:
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleSearchTermChange}
+          />
+        </label>
+      </div>
       <div className="d-flex justify-content-center align-content-center gap-3 flex-wrap ">
         {notes &&
           notes.map((note, index) => (
