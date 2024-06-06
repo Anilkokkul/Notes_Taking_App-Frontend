@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NoteForm from "./NoteForm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { instance } from "../App";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,20 +13,9 @@ import { useNavigate } from "react-router-dom";
 import NoteList from "./NoteList";
 
 function Home() {
-  const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getNotes();
-  }, []);
-
-  const getNotes = () => {
-    instance
-      .get("/notes")
-      .then((response) => setNotes(response.data.Notes))
-      .catch((error) => console.error("Error fetching notes: ", error));
-  };
   const handleEdit = (note) => {
     setSelectedNote(note);
   };
@@ -70,11 +59,7 @@ function Home() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <NoteForm
-        getNotes={getNotes}
-        editNote={selectedNote}
-        setSelectedNote={setSelectedNote}
-      />
+      <NoteForm editNote={selectedNote} setSelectedNote={setSelectedNote} />
       <NoteList handleEdit={handleEdit} />
       <ToastContainer />
     </>

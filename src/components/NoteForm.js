@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
-function NoteForm({ getNotes, editNote, setSelectedNote }) {
+function NoteForm({ editNote, setSelectedNote }) {
   const data = useMemo(() => ({ title: "", content: "", type: "task" }), []);
   const selectedNote = useMemo(() => editNote, [editNote]);
   const [note, setNote] = useState(data);
@@ -42,7 +42,6 @@ function NoteForm({ getNotes, editNote, setSelectedNote }) {
           position: "top-center",
           autoClose: 2000,
         });
-        getNotes();
         setSelectedNote(null);
       })
       .catch((error) => {

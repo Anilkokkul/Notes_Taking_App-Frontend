@@ -11,7 +11,7 @@ const NoteList = ({ handleEdit }) => {
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     getNotes();
-  }, []);
+  }, [notes]);
 
   const getNotes = () => {
     instance
