@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const NoteList = () => {
+const NoteList = ({ handleEdit }) => {
   const [notes, setNotes] = useState([]);
   const [filterOption, setFilterOption] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,7 +64,11 @@ const NoteList = () => {
       <div className=" d-flex justify-content-center align-items-center gap-2 p-2">
         <label>
           Filter by Category:
-          <select value={filterOption} onChange={handleFilterChange} className="form-select p-2" >
+          <select
+            value={filterOption}
+            onChange={handleFilterChange}
+            className="form-select p-2"
+          >
             <option value="all">All</option>
             <option value="task">Task</option>
             <option value="idea">Idea</option>
@@ -88,7 +92,9 @@ const NoteList = () => {
             <Card.Body>
               <Card.Title>{note.title}</Card.Title>
               <Card.Text>{note.content}</Card.Text>
-              <Button variant="success">Edit</Button>{" "}
+              <Button variant="success" onClick={() => handleEdit(note)}>
+                Edit
+              </Button>{" "}
               <Button variant="danger" onClick={() => handleDelete(note._id)}>
                 Delete
               </Button>

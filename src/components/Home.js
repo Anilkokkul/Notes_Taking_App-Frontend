@@ -1,11 +1,9 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NoteForm from "./NoteForm";
-// import NoteList from "./NoteList";
 import { useEffect, useState } from "react";
 
 import { instance } from "../App";
@@ -33,25 +31,6 @@ function Home() {
     setSelectedNote(note);
   };
 
-  const handleDelete = (id) => {
-    try {
-      instance
-        .delete(`/notes/${id}`)
-        .then((data) => {
-          toast(data.data.message, {
-            position: "top-center",
-            theme: "dark",
-            autoClose: 2000,
-          });
-          getNotes();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const handleLogout = () => {
     instance
       .get("/logout")
@@ -96,7 +75,7 @@ function Home() {
         editNote={selectedNote}
         setSelectedNote={setSelectedNote}
       />
-      <NoteList />
+      <NoteList handleEdit={handleEdit} />
       <ToastContainer />
     </>
   );
