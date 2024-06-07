@@ -93,7 +93,6 @@ function NoteForm({ editNote, setSelectedNote }) {
           name="type"
           required
         >
-          <option>select</option>
           <option defaultValue="idea">idea</option>
           <option value="reminder">reminder</option>
           <option value="task">task</option>
